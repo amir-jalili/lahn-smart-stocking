@@ -1,0 +1,26 @@
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Jupyter notebooks
+.ipynb_checkpoints/
+
+# Environment files
+.env
+.venv/
+*.env
+
+# Data & reports
+data/
+reports/
+
+# Model artifacts
+*.pkl
+*.h5
+*.joblib
+
+# DVC and MLflow
+.dvc/
+mlruns/
