@@ -1,0 +1,8 @@
+stages:
+  fe_v1:
+    cmd: python src/build_features.py
+    deps:
+    - data/processed/sales_clean.parquet
+    - src/build_features.py
+    outs:
+    - data/feature/sales_feat_v1.parquet

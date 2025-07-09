@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  fe_v1:
+    cmd: python src/build_features.py
+    deps:
+    - path: data/processed/sales_clean.parquet
+      hash: md5
+      md5: 34855863e64ce9b93bdbedc472ced222
+      size: 1129571
+    - path: src/build_features.py
+      hash: md5
+      md5: 54b3c8345d5184c89009e03bfffa3aef
+      size: 1724
+    outs:
+    - path: data/feature/sales_feat_v1.parquet
+      hash: md5
+      md5: 4315e5eec7a66881ff26b935465a3306
+      size: 1508215
