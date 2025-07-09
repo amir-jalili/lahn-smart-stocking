@@ -16,3 +16,19 @@ stages:
       hash: md5
       md5: 4315e5eec7a66881ff26b935465a3306
       size: 1508215
+  fe_v2:
+    cmd: python src/build_features_v2.py
+    deps:
+    - path: data/feature/sales_feat_v1.parquet
+      hash: md5
+      md5: 4315e5eec7a66881ff26b935465a3306
+      size: 1508215
+    - path: src/build_features_v2.py
+      hash: md5
+      md5: 228784ee38ca5dadc73ccd117b5a9966
+      size: 1891
+    outs:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
