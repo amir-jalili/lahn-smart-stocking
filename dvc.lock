@@ -32,3 +32,23 @@ stages:
       hash: md5
       md5: 2664a8087c77f3cd87c2ae5304be11cb
       size: 1994291
+  model_baseline:
+    cmd: python src/train_baseline.py
+    deps:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+    - path: src/train_baseline.py
+      hash: md5
+      md5: cae2431787ed54df9cf6500827f7a042
+      size: 2057
+    outs:
+    - path: metrics/baseline_metrics.json
+      hash: md5
+      md5: 58972cc17b03a221f35f996c0823b5ce
+      size: 57
+    - path: models/baseline_lgbm.joblib
+      hash: md5
+      md5: f3988cec445aa83b6171e155155d7252
+      size: 1173783
