@@ -13,8 +13,11 @@ __pycache__/
 *.env
 
 # Data & reports
-data/
-reports/
+-data/
++data/**
++# keep DVC metafiles:
++!data/**/*.dvc
+ reports/
 
 # Model artifacts
 *.pkl
@@ -22,5 +25,7 @@ reports/
 *.joblib
 
 # DVC and MLflow
-.dvc/
-mlruns/
+-.dvc/
++# the .dvc control dir should be tracked
++!.dvc/
+ mlruns/
