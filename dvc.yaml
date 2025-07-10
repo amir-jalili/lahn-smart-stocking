@@ -37,3 +37,27 @@ stages:
         cache: false
     - metrics/tuned_metrics.json:
         cache: false
+  model_catboost:
+    cmd: python src/train_catboost.py
+    deps:
+    - data/feature/sales_feat_v2.parquet
+    - src/train_catboost.py
+    outs:
+    - models/cb_baseline.cbm
+    metrics:
+    - metrics/cb_feature_importance.csv:
+        cache: false
+    - metrics/cb_metrics.json:
+        cache: false
+  model_catboost_tuned:
+    cmd: python src/tune_catboost.py
+    deps:
+    - data/feature/sales_feat_v2.parquet
+    - src/tune_catboost.py
+    outs:
+    - models/cb_best.cbm
+    metrics:
+    - metrics/cb_tuned_feature_importance.csv:
+        cache: false
+    - metrics/cb_tuned_metrics.json:
+        cache: false
