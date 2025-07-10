@@ -80,3 +80,27 @@ stages:
       hash: md5
       md5: 2b94cb210c301459e2a3cdcb36ff4faf
       size: 257509
+  model_catboost:
+    cmd: python src/train_catboost.py
+    deps:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+    - path: src/train_catboost.py
+      hash: md5
+      md5: 32cae68b219b5232b6d0efc40bd2e39c
+      size: 2602
+    outs:
+    - path: metrics/cb_feature_importance.csv
+      hash: md5
+      md5: a9d30ba814f040f5fff0a28587519d09
+      size: 875
+    - path: metrics/cb_metrics.json
+      hash: md5
+      md5: 6fa78471cc176e9a3b2cd16db46c0836
+      size: 59
+    - path: models/cb_baseline.cbm
+      hash: md5
+      md5: f4f90070f71803a235ce28a6c8baecfc
+      size: 2510452
