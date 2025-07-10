@@ -1,0 +1,63 @@
+stages:
+  fe_v1:
+    cmd: python src/build_features.py
+    deps:
+    - data/processed/sales_clean.parquet
+    - src/build_features.py
+    outs:
+    - data/feature/sales_feat_v1.parquet
+  fe_v2:
+    cmd: python src/build_features_v2.py
+    deps:
+    - data/feature/sales_feat_v1.parquet
+    - src/build_features_v2.py
+    outs:
+    - data/feature/sales_feat_v2.parquet
+  model_baseline:
+    cmd: python src/train_baseline.py
+    deps:
+    - data/feature/sales_feat_v2.parquet
+    - src/train_baseline.py
+    outs:
+    - models/baseline_lgbm.joblib
+    metrics:
+    - metrics/baseline_feature_importance.csv:
+        cache: false
+    - metrics/baseline_metrics.json:
+        cache: false
+  model_tuned:
+    cmd: python src/tune_lgbm.py
+    deps:
+    - data/feature/sales_feat_v2.parquet
+    - src/tune_lgbm.py
+    outs:
+    - models/best_lgbm.joblib
+    metrics:
+    - metrics/tuned_feature_importance.csv:
+        cache: false
+    - metrics/tuned_metrics.json:
+        cache: false
+  model_catboost:
+    cmd: python src/train_catboost.py
+    deps:
+    - data/feature/sales_feat_v2.parquet
+    - src/train_catboost.py
+    outs:
+    - models/cb_baseline.cbm
+    metrics:
+    - metrics/cb_feature_importance.csv:
+        cache: false
+    - metrics/cb_metrics.json:
+        cache: false
+  model_catboost_tuned:
+    cmd: python src/tune_catboost.py
+    deps:
+    - data/feature/sales_feat_v2.parquet
+    - src/tune_catboost.py
+    outs:
+    - models/cb_best.cbm
+    metrics:
+    - metrics/cb_tuned_feature_importance.csv:
+        cache: false
+    - metrics/cb_tuned_metrics.json:
+        cache: false

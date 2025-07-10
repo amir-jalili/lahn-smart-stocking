@@ -1,0 +1,130 @@
+schema: '2.0'
+stages:
+  fe_v1:
+    cmd: python src/build_features.py
+    deps:
+    - path: data/processed/sales_clean.parquet
+      hash: md5
+      md5: 34855863e64ce9b93bdbedc472ced222
+      size: 1129571
+    - path: src/build_features.py
+      hash: md5
+      md5: 54b3c8345d5184c89009e03bfffa3aef
+      size: 1724
+    outs:
+    - path: data/feature/sales_feat_v1.parquet
+      hash: md5
+      md5: 4315e5eec7a66881ff26b935465a3306
+      size: 1508215
+  fe_v2:
+    cmd: python src/build_features_v2.py
+    deps:
+    - path: data/feature/sales_feat_v1.parquet
+      hash: md5
+      md5: 4315e5eec7a66881ff26b935465a3306
+      size: 1508215
+    - path: src/build_features_v2.py
+      hash: md5
+      md5: 228784ee38ca5dadc73ccd117b5a9966
+      size: 1891
+    outs:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+  model_baseline:
+    cmd: python src/train_baseline.py
+    deps:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+    - path: src/train_baseline.py
+      hash: md5
+      md5: 4fb398162c96050970e53a825eddbfd1
+      size: 2679
+    outs:
+    - path: metrics/baseline_feature_importance.csv
+      hash: md5
+      md5: a26f18523db698eeeadef6bf405061d9
+      size: 851
+    - path: metrics/baseline_metrics.json
+      hash: md5
+      md5: 58972cc17b03a221f35f996c0823b5ce
+      size: 57
+    - path: models/baseline_lgbm.joblib
+      hash: md5
+      md5: f3988cec445aa83b6171e155155d7252
+      size: 1173783
+  model_tuned:
+    cmd: python src/tune_lgbm.py
+    deps:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+    - path: src/tune_lgbm.py
+      hash: md5
+      md5: f6b2e9d85e7e9a0462e1fd9439181d90
+      size: 3871
+    outs:
+    - path: metrics/tuned_feature_importance.csv
+      hash: md5
+      md5: 83fdb0d5b3b19bf43201c3d4171ea537
+      size: 588
+    - path: metrics/tuned_metrics.json
+      hash: md5
+      md5: 7149a19c3d316245aed6c90578e0c5b7
+      size: 58
+    - path: models/best_lgbm.joblib
+      hash: md5
+      md5: 2b94cb210c301459e2a3cdcb36ff4faf
+      size: 257509
+  model_catboost:
+    cmd: python src/train_catboost.py
+    deps:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+    - path: src/train_catboost.py
+      hash: md5
+      md5: 32cae68b219b5232b6d0efc40bd2e39c
+      size: 2602
+    outs:
+    - path: metrics/cb_feature_importance.csv
+      hash: md5
+      md5: a9d30ba814f040f5fff0a28587519d09
+      size: 875
+    - path: metrics/cb_metrics.json
+      hash: md5
+      md5: 6fa78471cc176e9a3b2cd16db46c0836
+      size: 59
+    - path: models/cb_baseline.cbm
+      hash: md5
+      md5: f4f90070f71803a235ce28a6c8baecfc
+      size: 2510452
+  model_catboost_tuned:
+    cmd: python src/tune_catboost.py
+    deps:
+    - path: data/feature/sales_feat_v2.parquet
+      hash: md5
+      md5: 2664a8087c77f3cd87c2ae5304be11cb
+      size: 1994291
+    - path: src/tune_catboost.py
+      hash: md5
+      md5: 2b9ea66aecb1f1c1cd379086945e1fde
+      size: 3397
+    outs:
+    - path: metrics/cb_tuned_feature_importance.csv
+      hash: md5
+      md5: 58dbf8114d1a7a99859d700d6923f02c
+      size: 861
+    - path: metrics/cb_tuned_metrics.json
+      hash: md5
+      md5: f896734d6941d57e286909d338cad644
+      size: 59
+    - path: models/cb_best.cbm
+      hash: md5
+      md5: 3027a901101d8cd41b77da879d3af889
+      size: 24547416
